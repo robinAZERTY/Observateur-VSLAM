@@ -1,79 +1,79 @@
-# from manim import *
-# from manim import config
-# import os
-# from itertools import cycle
+from manim import *
+from manim import config
+import os
+from itertools import cycle
 
-# ALL_COLORS = [RED, BLUE, GREEN, TEAL, YELLOW, PURPLE, MAROON, PINK, GOLD]
+ALL_COLORS = [RED, BLUE, GREEN, TEAL, YELLOW, PURPLE, MAROON, PINK, GOLD]
 
 
-# # Définir le chemin d'exportation dans le même répertoire que le script
-# current_directory = os.path.dirname(os.path.abspath(__file__))
-# config.media_dir = os.path.join(current_directory, "media")
+# Définir le chemin d'exportation dans le même répertoire que le script
+current_directory = os.path.dirname(os.path.abspath(__file__))
+config.media_dir = os.path.join(current_directory, "media")
 
-# from manim import *
+from manim import *
 
-# class Bezier(ParametricFunction):
-#     def __init__(self, points, **kwargs):
-#         super().__init__(bezier(points),**kwargs)
+class Bezier(ParametricFunction):
+    def __init__(self, points, **kwargs):
+        super().__init__(bezier(points),**kwargs)
         
-# class RocketCombustionHeat(Scene):
-#     def construct(self):
-#         points = [
-#             np.array([x, y, 0])
-#             for x,y in [
-#                 (-5,2),  (-2,2), (-5,-3), (2,3),
-#                 (4,3.2), (6,0), (6,-3),  (0,-1),
-#             ]
-#         ]
-#         bezier_plot = Bezier(points)
-#         self.c_colors = cycle(ALL_COLORS[:len(points)-2])
-#         lines, dots = self.get_lines_and_dots_from_points(points)
-#         init_grp = VGroup(VGroup(lines, dots))
-#         all_grp = self.get_all_lines(init_grp.copy(), 0)
+class RocketCombustionHeat(Scene):
+    def construct(self):
+        points = [
+            np.array([x, y, 0])
+            for x,y in [
+                (-5,2),  (-2,2), (-5,-3), (2,3),
+                (4,3.2), (6,0), (6,-3),  (0,-1),
+            ]
+        ]
+        bezier_plot = Bezier(points)
+        self.c_colors = cycle(ALL_COLORS[:len(points)-2])
+        lines, dots = self.get_lines_and_dots_from_points(points)
+        init_grp = VGroup(VGroup(lines, dots))
+        all_grp = self.get_all_lines(init_grp.copy(), 0)
 
-#         self.add(all_grp)
-#         self.wait()
-#         self.play(
-#             UpdateFromAlphaFunc(all_grp,
-#                 lambda mob, alpha: mob.become(
-#                     self.get_all_lines(init_grp.copy(), alpha)
-#                 )
-#             ),
-#             Create(bezier_plot),
-#             run_time=10, rate_func=linear
-#         )
-#         self.wait()
+        self.add(all_grp)
+        self.wait()
+        self.play(
+            UpdateFromAlphaFunc(all_grp,
+                lambda mob, alpha: mob.become(
+                    self.get_all_lines(init_grp.copy(), alpha)
+                )
+            ),
+            Create(bezier_plot),
+            run_time=10, rate_func=linear
+        )
+        self.wait()
 
-#     def get_lines_and_dots_from_points(self, points):
-#         lines = VGroup(*[
-#             Line(points[i],points[i+1])
-#             for i in range(len(points)-1)
-#         ])
-#         dots = VGroup(*list(map(Dot,points)))
-#         return lines, dots
+    def get_lines_and_dots_from_points(self, points):
+        lines = VGroup(*[
+            Line(points[i],points[i+1])
+            for i in range(len(points)-1)
+        ])
+        dots = VGroup(*list(map(Dot,points)))
+        return lines, dots
 
-#     def get_sub_lines(self, lines, alpha):
-#         points = [
-#             l.point_from_proportion(alpha)
-#             for l in lines
-#         ]
-#         new_lines, dots =  self.get_lines_and_dots_from_points(points)
-#         return VGroup(new_lines, dots).set_color(next(self.c_colors))
+    def get_sub_lines(self, lines, alpha):
+        points = [
+            l.point_from_proportion(alpha)
+            for l in lines
+        ]
+        new_lines, dots =  self.get_lines_and_dots_from_points(points)
+        return VGroup(new_lines, dots).set_color(next(self.c_colors))
 
-#     def get_all_lines(self, main_grp, alpha, index=0):
-#         last_grp = main_grp[-1]
-#         new_lines = last_grp[0]
-#         if len(new_lines) >= 2:
-#             main_grp.add( self.get_sub_lines(new_lines, alpha) )
-#             return self.get_all_lines(main_grp, alpha, index+1)
-#         else:
-#             main_grp.add( Dot(new_lines[0].point_from_proportion(alpha)) )
-#             return main_grp
-# if __name__ == "__main__":
-#     # Export en MP4
-#     config.format = "mp4"
-#     RocketCombustionHeat().render()  # Rend en vidéo MP4
+    def get_all_lines(self, main_grp, alpha, index=0):
+        last_grp = main_grp[-1]
+        new_lines = last_grp[0]
+        if len(new_lines) >= 2:
+            main_grp.add( self.get_sub_lines(new_lines, alpha) )
+            return self.get_all_lines(main_grp, alpha, index+1)
+        else:
+            main_grp.add( Dot(new_lines[0].point_from_proportion(alpha)) )
+            return main_grp
+if __name__ == "__main__":
+    # Export en MP4
+    config.format = "mp4"
+    RocketCombustionHeat().render()  # Rend en vidéo MP4
     
-#     # # Export en GIF
-#     # config.format = "gif"
-#     # RocketCombustionHeat().render()  # Rend en GIF
+    # # Export en GIF
+    config.format = "gif"
+    RocketCombustionHeat().render()  # Rend en GIF
