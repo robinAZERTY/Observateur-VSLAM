@@ -8,11 +8,11 @@ On souhaite controller la température dans la chambre de combustion d'un moteur
 Le carburant en combustion fait chauffer la chambre de combustion. Ensuite, la chambre de combustion évacue sa chaleur par rayonnement vers le vide ou par conduction vert d'autres éléments. Pour finir, une infime partie de la chaleur est transmise au compartiment du capteur, par conduction.
 <!-- diagramme des échanges thermiques-->
 
-
+$$\textbf{Vecteur d'état :}$$
+$$X = \begin{bmatrix} T_{com} \\ T_{cap} \end{bmatrix}$$
 ```math
 \textbf{Vecteur d'état :} \\[3mm]
 X = \begin{bmatrix} T_{com} \\ T_{cap} \end{bmatrix} \\[3mm]
-
 T_{com} : \text{température dans la chambre de combustion} \\
 T_{cap} : \text{température au niveau du compartiment capteur}
 \\[6mm]
