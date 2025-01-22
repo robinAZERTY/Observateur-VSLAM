@@ -1,0 +1,8 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/robin/Desktop/Observateur-VSLAM/EKF/moteurFusée/media/videos/1080p60/partial_movie_files/Engine/3977891868_2170710118_59354685.mp4'
+file 'file:C:/Users/robin/Desktop/Observateur-VSLAM/EKF/moteurFusée/media/videos/1080p60/partial_movie_files/Engine/2852726489_3333065685_2564824598.mp4'
+file 'file:C:/Users/robin/Desktop/Observateur-VSLAM/EKF/moteurFusée/media/videos/1080p60/partial_movie_files/Engine/2852726489_3333065685_24204088.mp4'
+file 'file:C:/Users/robin/Desktop/Observateur-VSLAM/EKF/moteurFusée/media/videos/1080p60/partial_movie_files/Engine/2852726489_3333065685_3578120543.mp4'
+file 'file:C:/Users/robin/Desktop/Observateur-VSLAM/EKF/moteurFusée/media/videos/1080p60/partial_movie_files/Engine/2852726489_3333065685_2654317887.mp4'
+file 'file:C:/Users/robin/Desktop/Observateur-VSLAM/EKF/moteurFusée/media/videos/1080p60/partial_movie_files/Engine/2852726489_3333065685_2315672023.mp4'
+file 'file:C:/Users/robin/Desktop/Observateur-VSLAM/EKF/moteurFusée/media/videos/1080p60/partial_movie_files/Engine/2852726489_667144672_226605800.mp4'
