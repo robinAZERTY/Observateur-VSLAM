@@ -10,7 +10,6 @@ ALL_COLORS = [RED, BLUE, GREEN, TEAL, YELLOW, PURPLE, MAROON, PINK, GOLD]
 current_directory = os.path.dirname(os.path.abspath(__file__))
 config.media_dir = os.path.join(current_directory, "media")
 
-from manim import *
 
 
    
