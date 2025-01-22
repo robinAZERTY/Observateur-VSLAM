@@ -63,7 +63,7 @@ class Observateurs(MovingCameraScene):
         estimationLine1 = Line(start=sensor.get_left(), end = line1End)
         estimationLine2 = Line(start=estimationLine1.get_end(), end = comparator.point_at_angle(-PI/2))
         estimationLine = VGroup(estimationLine1, estimationLine2)
-        estimationTxt = Text("estimation d'état").scale(0.4).next_to(estimationLine1, UP, buff=0.1)
+        estimationTxt = Text("état estimé").scale(0.4).next_to(estimationLine1, UP, buff=0.1)
         
         
         
