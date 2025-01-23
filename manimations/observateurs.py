@@ -137,4 +137,5 @@ class Observateurs(MovingCameraScene):
 
         
 if __name__ == "__main__":
+    config.format = "mp4"
     Observateurs().render()
