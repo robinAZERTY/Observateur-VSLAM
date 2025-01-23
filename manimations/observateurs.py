@@ -24,23 +24,23 @@ class Observateurs(MovingCameraScene):
         controller = Rectangle(height=1.5, width=3, fill_opacity=0.5).set_color(GRAY).move_to([-2.5, 0, 0]).set_stroke(width=2)
         controllerTxt = Text("contrôleur").scale(0.5).move_to(controller.get_center())
         
-        # placer le texte au dessus du rectangle dynamiquement
+        # # placer le texte au dessus du rectangle dynamiquement
         system = Rectangle(height=1.5, width=3, fill_opacity=0.5).set_color(GRAY).move_to([2.5, 0, 0]).set_stroke(width=2)
         systemTxt = Text("système").scale(0.5).move_to(system.get_center())
         
-        # placer un comparateur devant le controller
+        # # placer un comparateur devant le controller
         comparator = Circle(radius=0.3, fill_opacity=0.5).set_color(GRAY).next_to(controller, LEFT, buff=1)
         comparatorCross = Cross(comparator).set_color(GRAY).scale(0.75)
             
-        # ajouter une consigne en entrée du comparateur avec un text et une ligne
+        # # ajouter une consigne en entrée du comparateur avec un text et une ligne
         refLine = Line(start=comparator.get_left() + 1.5*LEFT, end = comparator.get_left())
         refTxt = Text("consigne").scale(0.4).next_to(refLine, UP, buff=0.1)
                 
-        # ajouter l'erreur en sortie du comparateur avec un text et une ligne
+        # # ajouter l'erreur en sortie du comparateur avec un text et une ligne
         errorLine = Line(start=comparator.get_right(), end = controller.get_left())
         errorTxt = Text("erreur").scale(0.4).next_to(errorLine, UP, buff=0.1)
         
-        # ajouter une commande en sortie du contrôleur avec un text et une ligne
+        # # ajouter une commande en sortie du contrôleur avec un text et une ligne
         commandLine = Line(start=controller.get_right(), end = system.get_left())
         commandTxt = Text("commande").scale(0.4).next_to(commandLine, UP, buff=0.1)
         
@@ -93,7 +93,7 @@ class Observateurs(MovingCameraScene):
         observerTxt = Text("observateur").scale(0.5).move_to(observer.get_center())
         newStateEstimationLine1 = Line(start=observer.get_left(), end = estimationLine2.get_start())
         
-        # ajouter une ligne pour faire parvenir les mesures du capteur à l'observateur
+        # # ajouter une ligne pour faire parvenir les mesures du capteur à l'observateur
         measureLine = Line(start=sensor.get_left(), end = observer.get_right())
         measureTxt = Text("mesure").scale(0.4).next_to(measureLine, UP, buff=0.1)
 
@@ -105,9 +105,33 @@ class Observateurs(MovingCameraScene):
         self.play(
             self.camera.frame.animate.move_to(observer).set(height=observer.height),
             FadeOut(observer),
-            Transform(observerTxt, Text("Observateurs").next_to(observer, UP, buff=-0.4).scale(0.3))
         )
-        self.wait()
+        self.wait(5)
+        ObsEq = Text("observateur = estimateur d'état").scale(0.2).move_to(observerTxt.get_center())
+        self.play(Transform(observerTxt, ObsEq))
+        self.wait(3)
+        # placer le texte en haut
+        newEstText = Text("estimateur d'état").next_to(observer, UP, buff=-0.4).scale(0.3)
+        underline = Underline(newEstText).set_stroke(width=2)
+        self.play(Transform(observerTxt, newEstText))
+        self.play(Create(underline))
+        self.wait(5)
+        
+        # dans les filtres bayésiens, il y a des filtres à particules, des filtres de Kalman, des filtres de Kalman étendus et des filtres de Kalman non linéaires, etc.
+        # ajouter un texte pour expliquer les différents types de filtres bayésiens
+        bayenianTxt = Text("filtres bayésiens").scale(0.2).move_to(self.camera.frame.get_center())
+        particleFilter = Text("filtres à particules").scale(0.15).next_to(bayenianTxt, DOWN, buff=self.camera.frame.get_height()/4).shift(LEFT*self.camera.frame.get_width()/4)
+        kalmanFilter = Text("filtres de Kalman").scale(0.15).next_to(bayenianTxt, DOWN, buff=self.camera.frame.get_height()/4).shift(RIGHT*self.camera.frame.get_width()/4)
+        bayeniantxt_down = bayenianTxt.get_center() + DOWN*bayenianTxt.get_height()/2
+        particleFilter_up = particleFilter.get_center() + UP*particleFilter.get_height()/2
+        kalmanFilter_up = kalmanFilter.get_center() + UP*kalmanFilter.get_height()/2
+        
+        line1 = Line(start=bayeniantxt_down+LEFT*bayenianTxt.get_width()/3, end = particleFilter_up).set_stroke(width=2)
+        line2 = Line(start=bayeniantxt_down+RIGHT*bayenianTxt.get_width()/3, end = kalmanFilter_up).set_stroke(width=2)
+        self.play(FadeIn(bayenianTxt))
+        self.play(FadeIn(particleFilter), Create(line1))
+        self.play(FadeIn(kalmanFilter), Create(line2))
+        self.wait(5)
         
 
 
