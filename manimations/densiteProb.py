@@ -41,22 +41,33 @@ class DensiteProb(MovingCameraScene):
         
         self.wait(1)
         
-        # dessiner une forme pour représenter la densité de probabilité bleu dont la transparence est fonction de la probabilité
-        # Création d'une ellipse
-        ellipse = Ellipse(
-            width=2,  # Largeur de l'ellipse
-            height=1,  # Hauteur de l'ellipse
-            color=BLUE,  # Couleur de l'ellipse
-            fill_opacity=0.5  # Opacité du remplissage
-        )
+        axes = ThreeDAxes()
+        # Dessiner une gaussienne 2D pour représenter la densité de probabilité
+        def gaussian_2d(x, y, mu, cov):
+            pos = np.array([x, y])
+            inv_cov = np.linalg.inv(cov)
+            diff = pos - mu
+            exponent = -0.5 * np.dot(np.dot(diff.T, inv_cov), diff)
+            return np.exp(exponent)
         
-        # Position de l'ellipse
-        ellipse.move_to([2, 2, 0])
+        mu = np.array([2, 2])
+        cov = np.array([[0.5, 0.1], [0.1, 0.5]])
         
-        # Affichage de l'ellipse
-        self.play(FadeOut(cross),FadeOut(robotArrow))
-        newRobotTxt = robotText.copy().move_to(ellipse.get_center()+UP*ellipse.height)
-        self.play(Transform(robot, ellipse), Transform(robotText, newRobotTxt))
+        # Créer la surface de la gaussienne
+        surface = Surface(
+            lambda u, v: axes.c2p(u, v, gaussian_2d(u, v, mu, cov)),
+            u_range=[mu[0] - 2.5*np.sqrt(cov[0, 0]), mu[0] + 2.5*np.sqrt(cov[0, 0])],
+            v_range=[mu[1] - 2.5*np.sqrt(cov[1, 1]), mu[1] + 2.5*np.sqrt(cov[1, 1])],
+            resolution=(100, 100),
+            fill_opacity=1,
+            stroke_width=0,
+        ).set_fill_by_value(axes, colorscale=[(BLACK, 0), (BLUE, gaussian_2d(mu[0],mu[1],mu, cov))], axis=2)
+                    
+        self.play(FadeOut(cross), FadeOut(robotArrow))
+        newRobotTxt = robotText.copy().next_to(surface, UP+RIGHT, buff=0.2)
+        self.play(FadeOut(robot), FadeIn(surface), Transform(robotText, newRobotTxt))
+        
+        self.wait(2)
         
         
         
