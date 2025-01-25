@@ -1,6 +1,6 @@
 # Cas n°1 : moteur fusée
 ### Structure du système
-![Animation Manim](../../manimations\media\videos\1080p60\Engine.mp4.gif)
+![Animation Manim](../../manimations\media\images\Captured’ecran2025-01-25150231.png)
 ### Énoncé
 On souhaite controller la température dans la chambre de combustion d'un moteur de fusée car si elle est trop élevée, le moteur peut exploser. On dispose d'un capteur de température, mais il est déporté car autrement il ne résisterait pas très longtemps à la chaleur. On souhaite donc estimer la température dans la chambre de combustion, sachant qu'on ne peut pas la mesurer directement.
 
