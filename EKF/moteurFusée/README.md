@@ -28,13 +28,11 @@ $$P : \textrm{la puissance thermique injectée dans la chambre de combustion.}$$
 
 
 $$\textbf{Modèle de prédiction :}$$
-$$f(X,U) = \begin{bmatrix} T_{com} + \Delta t*\frac{P}{C} * (1 - T_{cap} - T_{ext}) \\ T_{cap} + \Delta t*\alpha * (T_{com} - T_{cap}) \end{bmatrix}$$
+$$f(X,U) = 
+\begin{bmatrix} T_{com} + \Delta t*\frac{P-\alpha(T_{com}-T_{cap})-\beta(T_{com}-T_{cap})}{C_{com}} \\[10pt] T_{cap} + \Delta t * \frac{\beta(T_{com}-T_{cap})-\gamma(T_{cap}-T_{ext})}{C_{cap}} \end{bmatrix}$$
 $$\begin{aligned}
 &\begin{aligned}
-\Delta t &: \textrm{pas de temps} \\
-C &: \textrm{capacité thermique de la chambre de combustion} \\
-T_{ext} &: \textrm{température extérieure} \\
-\alpha &: \textrm{coefficient de conduction entre la chambre de combustion et le compartiment capteur}
+\begin{aligned} \Delta t &: \textrm{pas de temps} \\ C_{com} &: \textrm{capacité thermique de la chambre de combustion} \\ T_{ext} &: \textrm{température extérieure} \\ \alpha &: \textrm{coefficient de conduction entre la chambre de combustion et les ergols cryogéniques} \\ \beta &: \textrm{coefficient de conduction entre la chambre de combustion et le compartiment capteur} \\ \gamma &: \textrm{coefficient de conduction entre le compartiment capteur et l'extérieur} \end{aligned}
 \end{aligned}
 \end{aligned}$$
 
