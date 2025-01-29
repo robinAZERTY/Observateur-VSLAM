@@ -29,6 +29,29 @@ delay for correction: 1ms
 */
 
 #include <Arduino.h>
+#include <ekf.hpp>
+#include "MPU9250.h"
+
+template <typename T>
+internal::tmp<Vector<T>> && f(const Vector<T> &x, const Vector<T> &u, const Vector<T> &c)
+{
+    auto *ret = internal::tmp<Vector<T>>::get(x.size()); // ask for a temporary variable of the same size as x
+    (*ret)[0] = x[0] + c[0] *(u[0]/c[1] - (x[0]-c[3])/c[2]); // compute the new temperature
+    return internal::move(*ret); // return the temporary variable
+}
+
+// simple measurement function
+template <typename T>
+internal::tmp<Vector<T>> && h(const Vector<T> &x, const Vector<T> &c)
+{
+    auto *ret = internal::tmp<Vector<T>>::get(1); // ask for a temporary variable of size 2
+    (*ret)[0] = x[0];
+    return internal::move(*ret);
+}
+
+
+
+MPU9250 IMU(Wire,0x68);
 
 
 // put function declarations here:
